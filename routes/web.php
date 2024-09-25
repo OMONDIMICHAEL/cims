@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InventoryTrackingController;
+use App\Http\Controllers\SupplierProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AddRetailProductController;
 use Illuminate\Auth\Events\Verified;
@@ -31,6 +32,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::post('/add-retail-product', [AddRetailProductController::class, 'AddRetailProduct'])->name('addRetailProduct');
-
+Route::get('/supplierProductDetails/{productId}', [SupplierProductController::class, 'supplierProduct'])->name('supplierProductDetails');
 
 require __DIR__.'/auth.php';

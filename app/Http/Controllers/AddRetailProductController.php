@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Models\SupplierProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// use App\Models\supplierProduct;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -52,7 +51,7 @@ class AddRetailProductController extends Controller
             $RetailerProduct->productTerms = $validatedData['productTerms'];
             $RetailerProduct->supplierName = Auth::user()->name;
             $RetailerProduct->supplierEmail = Auth::user()->email;
-            $RetailerProduct->productImage = $validatedData['productImage'];
+            $RetailerProduct->productImage = $productImageFileName;
             $RetailerProduct->save();
 
         // Redirect to a success page or display a success message
