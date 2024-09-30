@@ -79,7 +79,85 @@
                         </form>
                     </div>
                     <div x-show="ShowOrders">
-                        My Orders
+                        <section id="supplierSalesSec" class="table-responsive">
+                            <table  class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Product ID.</th>
+                                        <th>Product Name.</th>
+                                        <th>Quantity Ordered.</th>
+                                        <th>Quantity Description</th>
+                                        <th>Wholesaler Name.</th>
+                                        <th>Wholesaler Email.</th>
+                                        <th>Wholesaler Phone.</th>
+                                        <th>Selling Price.</th>
+                                        <th>Date Sold.</th>
+                                    </tr>
+                                </thead>
+                                <?php
+                                $supplierSale = $conn->prepare("SELECT * FROM inventory.supplierSale WHERE supplierSale.supplierName = :supplierName");
+                                $supplierSale->bindParam(':supplierName', $supplierDetails['supplierName']);
+                                $supplierSale->execute();
+                                $supplierSale->rowCount();
+                                    foreach ($supplierSale->fetchAll(PDO::FETCH_ASSOC) as $gottenSupplierSale) {
+                                        echo"
+                                            <tbody>
+                                                <tr>
+                                                    <td>".$gottenSupplierSale['productId']."</td>
+                                                    <td>".$gottenSupplierSale['productName']."</td>
+                                                    <td>".$gottenSupplierSale['quantityOrdering']."</td>
+                                                    <td>".$gottenSupplierSale['quantityDescription']."</td>
+                                                    <td>".$gottenSupplierSale['wholesalerName']."</td>
+                                                    <td>".$gottenSupplierSale['wholesalerEmail']."</td>
+                                                    <td>".$gottenSupplierSale['wholesalerPhone']."</td>
+                                                    <td>".$gottenSupplierSale['productSellingPrice']."</td>
+                                                    <td>".$gottenSupplierSale['saleDate']."</td>
+                                                </tr>
+                                            </tbody>
+                                        ";
+                                    }
+                                ?>
+                            </table>
+                        </section>
+                        <section id="supplierOrderInvoiceSec" class="table-responsive">
+                            <table id="myOrdersTbl"  class="table table-striped table-hover">
+                                <caption>GET INVOICES AND CONFIRM ORDERS.</caption>
+                                <thead>
+                                    <tr>
+                                        <th>Order ID.</th>
+                                        <th>Product ID.</th>
+                                        <th>Product Name.</th>
+                                        <th>Quantity Ordered.</th>
+                                        <th>Date Ordered.</th>
+                                        <th>Wholesaler Name.</th>
+                                        <th>Order Status.</th>
+                                        <th>Order Invoice.</th>
+                                    </tr>
+                                </thead>
+                                <?php
+                                $supplierPlacedOrder = $conn->prepare("SELECT * FROM inventory.wholesalerOrder WHERE wholesalerOrder.supplierName = :supplierName");
+                                $supplierPlacedOrder->bindParam(':supplierName', $supplierDetails['supplierName']);
+                                $supplierPlacedOrder->execute();
+                                $supplierPlacedOrder->rowCount();
+                                    foreach ($supplierPlacedOrder->fetchAll(PDO::FETCH_ASSOC) as $gottenSupplierPlacedOrder) {
+                                        echo"
+                                            <tbody>
+                                                <tr>
+                                                    <td>".$gottenSupplierPlacedOrder['orderId']."</td>
+                                                    <td>".$gottenSupplierPlacedOrder['productId']."</td>
+                                                    <td>".$gottenSupplierPlacedOrder['productName']."</td>
+                                                    <td>".$gottenSupplierPlacedOrder['quantityOrdering']."</td>
+                                                    <td>".$gottenSupplierPlacedOrder['oderDate']."</td>
+                                                    <td>".$gottenSupplierPlacedOrder['wholesalerName']."</td>
+                                                    <td>"?><a href="confirmOrder.php?orderId=<?php echo $gottenSupplierPlacedOrder['orderId'];?>"><?php echo $gottenSupplierPlacedOrder['orderStatus'];?>.</a><?php echo "</td>
+                                                    <td>"?><a href="generateInvoice.php?orderId=<?php echo $gottenSupplierPlacedOrder['orderId'];?>">INVOICE.</a><?php echo "</td>
+                                                </tr>
+                                            </tbody>
+                                        ";
+                                    }
+                                ?>
+                            </table>
+                        </section>
                     </div>
             </div>
             <!-- //////////// -->

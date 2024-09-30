@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\SalesAndOrderController;
 use App\Http\Controllers\InventoryTrackingController;
 use App\Http\Controllers\SupplierProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AddRetailProductController;
+use App\Http\Controllers\SupplierDashboardController;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 
@@ -11,13 +13,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
+Route::get('/dashboard', [SupplierDashboardController::class, 'getOtherSupplierProductsFn'], function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/InventoryTracking', [InventoryTrackingController::class, 'index'], function(){
     return view('InventoryTracking');
 })->middleware(['auth', 'verified'])->name('InventoryTracking');
-Route::get('/SalesAndOrder', function(){
+Route::get('/SalesAndOrder', [SalesAndOrderController::class, 'getSalesAndOrderFn'], function(){
     return view('SalesAndOrder');
 })->middleware(['auth', 'verified'])->name('SalesAndOrder');
 Route::get('/ReportsAndAnalysis', function(){
