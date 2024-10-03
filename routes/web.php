@@ -6,6 +6,7 @@ use App\Http\Controllers\SupplierProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AddRetailProductController;
 use App\Http\Controllers\SupplierDashboardController;
+use App\Http\Controllers\UpdateSupplierProductQuantityController;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,7 @@ Route::get('/dashboard', [SupplierDashboardController::class, 'getOtherSupplierP
 Route::get('/InventoryTracking', [InventoryTrackingController::class, 'index'], function(){
     return view('InventoryTracking');
 })->middleware(['auth', 'verified'])->name('InventoryTracking');
-Route::get('/SalesAndOrder', [SalesAndOrderController::class, 'getSalesAndOrderFn'], function(){
+Route::get('/SalesAndOrder', function(){
     return view('SalesAndOrder');
 })->middleware(['auth', 'verified'])->name('SalesAndOrder');
 Route::get('/ReportsAndAnalysis', function(){
@@ -34,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::post('/add-retail-product', [AddRetailProductController::class, 'AddRetailProduct'])->name('addRetailProduct');
+Route::post('/update-retail-product', [UpdateSupplierProductQuantityController::class, 'addNewSupplierProductQuantity'])->name('updateSupplierProductQuantity');
 Route::get('/supplierProductDetails/{productId}', [SupplierProductController::class, 'supplierProduct'])->name('supplierProductDetails');
 
 require __DIR__.'/auth.php';

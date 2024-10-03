@@ -15,19 +15,23 @@
             <div class="col-md-8 col-lg-8 col-xl-8 mx-auto mb-4" id="bodyGridDiv">
                 <div class="container-fluid text-center text-md-start mt-5">
                     <div class="" id="supplierProductSecGrid">
-                        <div class="card p-3">
-                            <div class="class='bg-image hover-overlay' data-mdb-ripple-init id='' data-mdb-ripple-color='light'" style="max-width: 100%;">
-                                <a href='#!'>
-                                    <div class='mask' style='background-color: rgba(251, 251, 251, 0.15); width:100%'>
-                                        <p><strong>{{ $product->productName}}</strong></p>
-                                        <img src="{{ asset('RetailProductImg/' .$product->productImage)}}" alt="{{ $product->productName }}" class="img-fluid" style="max-height: 200px; max-width:100%; object-fit:cover;" />
-                                    </div>
-                                </a>
+                        <form action="{{ route('updateSupplierProductQuantity') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <label class="visually-visible" for="CurrentProductQuantity">
+                                Current product quantity:
+                            </label>
+                            <span id="CurrentProductQuantity">
+                                {{ $product->productQuantity }}
+                            </span><br>
+                            <label class="visually-visible" for="AddMoreQuantity">
+                                Add More:
+                            </label><br>
+                            <div class="input-group">    
+                                <input type="number" name="AddMoreQuantity" id="AddMoreQuantity" class="form-control" required>
                             </div>
-                            <div class="card-body">
-                                <p><strong>product name: </strong>{{ $product->productName}}</p>
-                            </div>
-                        </div>
+                            <br><br>
+                            <button data-mdb-ripple-init type="submit" class="btn btn-danger">Update Quantity</button>
+                        </form>
                     </div>
                 </div>
             </div>

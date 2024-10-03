@@ -21,11 +21,11 @@
                             @foreach($supplierProducts as $supplierProduct)
                                 <div class="card">
                                     <div class="container-fluid">
+                                    <strong>{{ $supplierProduct->productName }}</strong> - Ksh{{ number_format($supplierProduct->productSellingPrice, 2) }}
                                         <a href="{{ route('supplierProductDetails', ['productId' => $supplierProduct->productId]) }}">
-                                        <img class="block h-9 w-auto fill-current text-gray-800"  src="{{ asset('RetailProductImg/' . $supplierProduct->productImage) }}" alt="{{ $supplierProduct->productName }}" />
+                                        <img class="block h-9 w-auto fill-current text-gray-800"  src="{{ asset('RetailProductImg/' . $supplierProduct->productImage) }}" alt="{{ $supplierProduct->productName }}" title="explore" />
                                         </a>
-                                        <strong>{{ $supplierProduct->productName }}</strong> - Ksh{{ number_format($supplierProduct->productSellingPrice, 2) }}
-                                        <p>{{ $supplierProduct->productDescription }}</p>
+                                        <strong>Available</strong> - {{ number_format($supplierProduct->productQuantity, 0) }}
                                     </div>
                                 </div>
                             @endforeach
