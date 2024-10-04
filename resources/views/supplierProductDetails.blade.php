@@ -15,7 +15,7 @@
             <div class="col-md-8 col-lg-8 col-xl-8 mx-auto mb-4" id="bodyGridDiv">
                 <div class="container-fluid text-center text-md-start mt-5">
                     <div class="" id="supplierProductSecGrid">
-                        <form action="{{ route('updateSupplierProductQuantity') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('updateSupplierProductQuantity', ['productId' => $product->productId]) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <label class="visually-visible" for="CurrentProductQuantity">
                                 Current product quantity:
