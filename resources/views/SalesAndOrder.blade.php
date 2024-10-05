@@ -19,7 +19,21 @@
                     <button type="button" @click="ShowOrders=true; ShowAddProduct=false; ShowSales=false" class="btn btn-success"  data-mdb-ripple-init>ORDERS AND INVOICE</button>
                 </div>
                     <div x-show="ShowSales">
-                        My sales.
+                        <section>
+                            <table>
+                                <thead>
+                                    <th>Product Id</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity Ordered</th>
+                                    <th>Quantity Description</th>
+                                    <th>Wholesaler Name</th>
+                                    <th>Wholesaler Email</th>
+                                    <th>Wholesaler Phone</th>
+                                    <th>Selling Price</th>
+                                    <th>Date Sold</th>
+                                </thead>
+                            </table>
+                        </section>
                     </div>
                     <div x-show="ShowAddProduct"><br>
                         <form  action="{{ route('addRetailProduct')}}" method="post" enctype="multipart/form-data">

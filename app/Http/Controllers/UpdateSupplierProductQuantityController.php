@@ -10,12 +10,15 @@ use Illuminate\Support\Facades\Redirect;
 
 class UpdateSupplierProductQuantityController extends Controller
 {
-    public function addNewSupplierProductQuantity(Request $addNewSupplierProductQuantityRequest, $supplierProductId): RedirectResponse {
-        $getSupplierProductId = SupplierProduct::where('productId', $supplierProductId)->firstOrFail();
-        $validatedQuantity = $addNewSupplierProductQuantityRequest->validate([
-            'AddMoreQuantity' => 'required|string|max:15',
+    public function addNewSupplierProductQuantity(Request $addNewSupplierProductQuantityRequest, $productId): RedirectResponse {
+        $addNewSupplierProductQuantityRequest->validate([
+            'AddMoreQuantity' => 'required|numeric|min:1',
         ]);
+        $getSupplierProductId = SupplierProduct::where('productId', $productId)->firstOrFail();
+        $newSupplierProductQuantity = $addNewSupplierProductQuantityRequest->input('AddMoreQuantity');
+        $getSupplierProductId->productQuantity += $newSupplierProductQuantity;
+        $getSupplierProductId->save();
 
-        return redirect()->back()->with('success', 'Product added successfully!');
+        return redirect()->back()->with('success', 'Product quantity updated successfully!');
     }
 }

@@ -35,6 +35,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'RetailPhone' => ['required','string','max:15'],
             'email' => ['required','string', 'lowercase', 'email', 'max:255', 'unique:users'],
+            'role' => ['required','string',],
             'password' => ['required','string','min:8', 'confirmed', Rules\Password::defaults()],
             'RetailLogo' => ['required','image','mimes:jpg,png,jpeg,gif,max:2048'],
         ]);
@@ -50,6 +51,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'RetailPhone' => $request->RetailPhone,
             'email' => $request->email,
+            'role' => $request->role,
             'password' => Hash::make($request->password),
             'RetailLogo' => $FileName // store path of the uploaded image
             //'RetailLogo' => $path ?? null, // store path of the uploaded image
@@ -57,8 +59,31 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
+        // Auth::login($user);
         Auth::login($user);
+        
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect($this->redirectPath());
+    }
+    /**
+     * Determine the redirection path based on user role.
+     *
+     * @return string
+     */
+    protected function redirectPath()
+    {
+        $user = Auth::user(); // Get the authenticated user
+
+        // Check the role of the user and set the redirect path accordingly
+        if ($user->role == 'customer') {
+            return '/customer/dashboard'; // Path for customer dashboard
+        } elseif ($user->role == 'supplier') {
+            return '/supplier/dashboard'; // Path for supplier dashboard
+        } elseif ($user->role == 'wholesaler') {
+            return '/wholesaler/dashboard'; // Path for wholesaler dashboard
+        }
+
+        // Default fallback
+        return '/home';
     }
 }

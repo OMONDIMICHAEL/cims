@@ -4,14 +4,14 @@
 
         <!-- Retailer Name -->
         <div>
-            <x-input-label for="name" :value="__('Retail Name')" />
+            <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <!-- Retailer Phone -->
         <div class="mt-4">
-            <x-input-label for="RetailPhone" :value="__('Retail Phone')" />
+            <x-input-label for="RetailPhone" :value="__('Phone')" />
             <x-text-input id="RetailPhone" class="block mt-1 w-full" name="RetailPhone" :value="old('RetailPhone')" required autofocus autocomplete="RetailPhone" />
             <x-input-error :messages="$errors->get('RetailPhone')" class="mt-2" />
         </div>
@@ -25,7 +25,7 @@
 
         <!-- RetailLogo -->
         <div class="mt-4">
-            <x-input-label for="RetailLogo" :value="__('Retail Logo')" />
+            <x-input-label for="RetailLogo" :value="__('Logo')" />
             <input id="RetailLogo" class="block mt-1 w-full" type="file" name="RetailLogo" :value="old('RetailLogo')" required />
             <x-input-error :messages="$errors->get('RetailLogo')" class="mt-2" />
         </div>
@@ -51,6 +51,14 @@
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+        <div class="mt-4">
+            <x-input-label for="role" :value="__('Register As:')"/>
+            <select id="role" name="role" required>
+                <option value="customer">Customer</option>
+                <option value="supplier">Supplier</option>
+                <option value="wholesaler">Wholesaler</option>
+            </select>
         </div>
 
         <div class="flex items-center justify-end mt-4">
