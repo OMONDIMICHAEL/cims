@@ -17,9 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [SupplierDashboardController::class, 'getOtherSupplierProductsFn'], function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', [SupplierDashboardController::class, 'getOtherSupplierProductsFn'], function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/InventoryTracking', [InventoryTrackingController::class, 'index'], function(){
     return view('InventoryTracking');
 })->middleware(['auth', 'verified'])->name('InventoryTracking');
@@ -41,7 +41,10 @@ Route::post('/add-retail-product', [AddRetailProductController::class, 'AddRetai
 Route::post('/update-retail-product/{productId}', [UpdateSupplierProductQuantityController::class, 'addNewSupplierProductQuantity'])->name('updateSupplierProductQuantity');
 Route::get('/supplierProductDetails/{productId}', [SupplierProductController::class, 'supplierProduct'])->name('supplierProductDetails');
 Route::get('/customer/dashboard', [CustomerController::class, 'index'])->name('customer.dashboard');
-Route::get('/supplier/dashboard', [SupplierController::class, 'index'])->name('dashboard');
+// Route::get('/supplier/dashboard', [SupplierController::class, 'index'])->name('dashboard');
+Route::get('supplier/dashboard', [SupplierDashboardController::class, 'getOtherSupplierProductsFn'], function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/wholesaler/dashboard', [WholesalerController::class, 'index'])->name('wholesaler.dashboard');
 
 

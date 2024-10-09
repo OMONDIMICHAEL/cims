@@ -31,4 +31,12 @@ class SupplierProduct extends Model
             $supplierProduct->productId = $supplierProduct->productName . '-' . $supplierProduct->supplierName . '-' . date('Y-m-d-His', time());
         });
     }
+    /**
+     * Define the relationship to the supplier (User).
+     */
+    public function supplier()
+    {
+        // Assuming 'supplierEmail' is the foreign key that links to the 'email' field in the User model
+        return $this->belongsTo(User::class, 'supplierEmail', 'email');
+    }
 }

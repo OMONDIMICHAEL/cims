@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
-    public function index()
+    public function index($otherSupplierProducts)
 {
     return view('dashboard');
 }
