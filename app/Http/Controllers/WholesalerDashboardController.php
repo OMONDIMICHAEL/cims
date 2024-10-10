@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SupplierProduct;
+use App\Models\WholesalerProduct;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,11 +14,11 @@ class WholesalerDashboardController extends Controller
     {
         // Retrieve all products that are not for this user
 
-        $otherSupplierProducts = SupplierProduct::where('supplierEmail', '!=', Auth::user()->email)->whereHas('supplier', function ($query) {
-            $query->where('role', 'supplier');
+        $otherWholesalerProducts = WholesalerProduct::where('wholesalerEmail', '!=', Auth::user()->email)->whereHas('wholesaler', function ($query) {
+            $query->where('role', 'wholesaler');
         })->get();
 
         // Pass the products to the view
-        return view('dashboard', compact('otherSupplierProducts'));
+        return view('wholesaler/dashboard', compact('otherWholesalerProducts'));
     }
 }

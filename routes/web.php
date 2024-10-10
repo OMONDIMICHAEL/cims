@@ -20,17 +20,17 @@ Route::get('/', function () {
 // Route::get('/dashboard', [SupplierDashboardController::class, 'getOtherSupplierProductsFn'], function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/InventoryTracking', [InventoryTrackingController::class, 'index'], function(){
-    return view('InventoryTracking');
+Route::get('supplier/InventoryTracking', [InventoryTrackingController::class, 'index'], function(){
+    return view('supplier/InventoryTracking');
 })->middleware(['auth', 'verified'])->name('InventoryTracking');
-Route::get('/SalesAndOrder', function(){
-    return view('SalesAndOrder');
+Route::get('supplier/SalesAndOrder', function(){
+    return view('supplier/SalesAndOrder');
 })->middleware(['auth', 'verified'])->name('SalesAndOrder');
-Route::get('/ReportsAndAnalysis', function(){
-    return view('ReportsAndAnalysis');
+Route::get('supplier/ReportsAndAnalysis', function(){
+    return view('supplier/ReportsAndAnalysis');
 })->middleware(['auth', 'verified'])->name('ReportsAndAnalysis');
-Route::get('/MyAccount', function(){
-    return view('MyAccount');
+Route::get('supplier/MyAccount', function(){
+    return view('supplier/MyAccount');
 })->middleware(['auth', 'verified'])->name('MyAccount');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -53,8 +53,8 @@ Route::get('supplier/dashboard', [SupplierDashboardController::class, 'getOtherS
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/wholesaler/dashboard', [WholesalerDashboardController::class, 'getOtherWholesalerProoductsFn'], function (){
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    return view('wholesalerDashboard');
+})->middleware(['auth', 'verified'])->name('wholesalerDashboard');
 
 
 require __DIR__.'/auth.php';

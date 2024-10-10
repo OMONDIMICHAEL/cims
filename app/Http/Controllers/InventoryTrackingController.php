@@ -16,6 +16,6 @@ class InventoryTrackingController extends Controller
         // $supplierProducts = SupplierProduct::all();
 
         // Pass the products to the view
-        return view('InventoryTracking', compact('supplierProducts'));
+        return view('supplier/InventoryTracking', compact('supplierProducts'));
     }
 }

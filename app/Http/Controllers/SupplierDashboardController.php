@@ -18,6 +18,6 @@ class SupplierDashboardController extends Controller
         })->get();
 
         // Pass the products to the view
-        return view('dashboard', compact('otherSupplierProducts'));
+        return view('supplier/dashboard', compact('otherSupplierProducts'));
     }
 }
