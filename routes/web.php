@@ -4,7 +4,7 @@ use App\Http\Controllers\SalesAndOrderController;
 use App\Http\Controllers\InventoryTrackingController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\WholesalerController;
+use App\Http\Controllers\WholesalerDashboardController;
 use App\Http\Controllers\SupplierProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AddRetailProductController;
@@ -37,15 +37,24 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 Route::post('/add-retail-product', [AddRetailProductController::class, 'AddRetailProduct'])->name('addRetailProduct');
+
 Route::post('/update-retail-product/{productId}', [UpdateSupplierProductQuantityController::class, 'addNewSupplierProductQuantity'])->name('updateSupplierProductQuantity');
+
 Route::get('/supplierProductDetails/{productId}', [SupplierProductController::class, 'supplierProduct'])->name('supplierProductDetails');
+
 Route::get('/customer/dashboard', [CustomerController::class, 'index'])->name('customer.dashboard');
+
 // Route::get('/supplier/dashboard', [SupplierController::class, 'index'])->name('dashboard');
+
 Route::get('supplier/dashboard', [SupplierDashboardController::class, 'getOtherSupplierProductsFn'], function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/wholesaler/dashboard', [WholesalerController::class, 'index'])->name('wholesaler.dashboard');
+
+Route::get('/wholesaler/dashboard', [WholesalerDashboardController::class, 'getOtherWholesalerProoductsFn'], function (){
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 
 require __DIR__.'/auth.php';
