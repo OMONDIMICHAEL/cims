@@ -20,10 +20,26 @@ class ProfileController extends Controller
      * Display the user's profile form.
      */
     public function edit(Request $request): View
+    // public function edit()
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = Auth::user();
+        
+        // Role-specific customizations
+        if ($user->role === 'supplier') {
+            return view('profile.edit', [
+                'user' => $request->user(),
+            ]);
+        } elseif ($user->role === 'wholesaler') {
+            return view('profile.edit', [
+                'user' => $request->user(),
+            ]);
+        } elseif ($user->role === 'customer') {
+            return view('profile.edit', [
+                'user' => $request->user(),
+            ]);
+        } else {
+            // Default profile data if no specific role matched
+        }
     }
 
     /**
@@ -31,37 +47,84 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        // $request->user()->fill($request->validated());
-        $request->validate([
-            'name' => ['required','string','max:255'],
-            'RetailPhone' => ['required','string'],
-            'email' => ['required'],
-            'RetailLogo' => ['image','max:2048'], // Adjust max size as needed
-        ]);
         $user = Auth::user();
-        // Ensure that $user is an instance of User model
-        if (!$user instanceof User) {
-            return redirect()->back()->with('error', 'Invalid user instance');
+        // $request->validate([
+        //     'name' => ['required','string','max:255'],
+        //     'RetailPhone' => ['required','string'],
+        //     'email' => ['required'],
+        //     'RetailLogo' => ['image','max:2048'], // Adjust max size as needed
+        // ]);
+        $rules = [
+            'name' => ['required', 'string', 'max:255'],
+            'RetailPhone' => ['required', 'string'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'RetailLogo' => ['image', 'max:2048'],
+        ];
+        // Additional role-specific validation rules
+        if ($user->role === 'supplier') {
+            $rules['supplier_specific_field'] = ['required', 'string'];
+        } elseif ($user->role === 'wholesaler') {
+            $rules['wholesaler_specific_field'] = ['required', 'string'];
+        } elseif ($user->role === 'customer') {
+            $rules['customer_specific_field'] = ['required', 'string'];
         }
-        $user->name = $request->input('name');
-        $user->RetailPhone = $request->input('RetailPhone');
-        $user->email = $request->input('email');
-    
+        $validatedData = $request->validate($rules);
+         // Update base profile information
+        $user->name = $validatedData['name'];
+        $user->RetailPhone = $validatedData['RetailPhone'];
+        $user->email = $validatedData['email'];
+         // Update RetailLogo if a new file is uploaded
         if ($request->hasFile('RetailLogo')) {
             $file = $request->file('RetailLogo');
-            $FileName = time() . '.' . $file->getClientOriginalExtension();
+            $FileName = time() . '.' . $file->getClientOriginalExtension();                  // test if the updates work
             $file->move(public_path('RetailLogoDir'), $FileName);
+
+            // Delete old RetailLogo if it exists
             if ($user->RetailLogo) {
                 Storage::disk('public')->delete($user->RetailLogo);
             }
+
             $user->RetailLogo = $FileName;
         }
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Handle role-specific updates
+        if ($user->role === 'supplier') {
+            $user->supplier_specific_field = $validatedData['supplier_specific_field'];
+        } elseif ($user->role === 'wholesaler') {
+            $user->wholesaler_specific_field = $validatedData['wholesaler_specific_field'];
+        } elseif ($user->role === 'customer') {
+            $user->customer_specific_field = $validatedData['customer_specific_field'];
         }
+        // Reset email verification if the email has changed
+        // if ($user->isDirty('email')) {
+        //     $user->email_verified_at = null;
+        // }
+
         $user->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return redirect()->route('profile.edit')->with('status', 'Profile updated successfully.');
+        // Ensure that $user is an instance of User model
+        // if (!$user instanceof User) {
+        //     return redirect()->back()->with('error', 'Invalid user instance');
+        // }
+        // $user->name = $request->input('name');
+        // $user->RetailPhone = $request->input('RetailPhone');
+        // $user->email = $request->input('email');
+    
+        // if ($request->hasFile('RetailLogo')) {
+        //     $file = $request->file('RetailLogo');
+        //     $FileName = time() . '.' . $file->getClientOriginalExtension();
+        //     $file->move(public_path('RetailLogoDir'), $FileName);
+        //     if ($user->RetailLogo) {
+        //         Storage::disk('public')->delete($user->RetailLogo);
+        //     }
+        //     $user->RetailLogo = $FileName;
+        // }
+        // if ($request->user()->isDirty('email')) {
+        //     $request->user()->email_verified_at = null;
+        // }
+        // $user->save();
+
+        // return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**

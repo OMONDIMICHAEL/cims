@@ -35,9 +35,9 @@ class WholesalerProduct extends Model
     /**
      * Define the relationship to the supplier (User).
      */
-    // public function supplier()
-    // {
-        // Assuming 'supplierEmail' is the foreign key that links to the 'email' field in the User model
-    //     return $this->belongsTo(User::class, 'supplierEmail', 'email');
-    // }
+    public function wholesaler()
+    {
+        // Assuming 'wholesalerEmail' is the foreign key that links to the 'email' field in the User model
+        return $this->belongsTo(User::class, 'wholesalerEmail', 'email');
+    }
 }

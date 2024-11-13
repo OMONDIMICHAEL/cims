@@ -37,6 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+// Route::middleware('auth')->group(function () {
+    // Route::get('/profile', [ProfileController::class, 'wholesalerEdit'])->name('profile.wholesalerEdit');
+// });
 
 Route::post('/add-retail-product', [AddRetailProductController::class, 'AddRetailProduct'])->name('addRetailProduct');
 
@@ -52,9 +55,26 @@ Route::get('supplier/dashboard', [SupplierDashboardController::class, 'getOtherS
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/wholesaler/dashboard', [WholesalerDashboardController::class, 'getOtherWholesalerProoductsFn'], function (){
+Route::get('/wholesaler/dashboard', [WholesalerDashboardController::class, 'getOtherWholesalerProductsFn'], function (){
     return view('wholesalerDashboard');
 })->middleware(['auth', 'verified'])->name('wholesalerDashboard');
+
+Route::get('/wholesaler/wholesalerInventoryTracking', [WholesalerDashboardController::class, 'getOtherWholesalerProductsFn'], function (){
+    return view('wholesalerDashboard');
+})->middleware(['auth', 'verified'])->name('wholesalerInventoryTracking');
+
+Route::get('/wholesaler/wholesalerSalesAndOrder', [WholesalerDashboardController::class, 'getOtherWholesalerProductsFn'], function (){
+    return view('wholesalerDashboard');
+})->middleware(['auth', 'verified'])->name('wholesalerSalesAndOrder');
+
+Route::get('/wholesaler/wholesalerReportsAndAnalysis', [WholesalerDashboardController::class, 'getOtherWholesalerProductsFn'], function (){
+    return view('wholesalerDashboard');
+})->middleware(['auth', 'verified'])->name('wholesalerReportsAndAnalysis');
+
+Route::get('/wholesaler/wholesalerMyAccount', [WholesalerDashboardController::class, 'getOtherWholesalerProductsFn'], function (){
+    return view('wholesalerDashboard');
+})->middleware(['auth', 'verified'])->name('wholesalerMyAccount');
+
 
 
 require __DIR__.'/auth.php';

@@ -26,7 +26,19 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        // Regenerate the session to protect against session fixation attacks
         $request->session()->regenerate();
+
+        // Check the authenticated user's role and redirect accordingly
+        $user = $request->user(); // Get the authenticated user
+
+        if ($user->role === 'customer') {
+            return redirect()->intended('/customer/dashboard'); // Redirect to customer dashboard
+        } elseif ($user->role === 'supplier') {
+            return redirect()->intended('/supplier/dashboard'); // Redirect to supplier dashboard
+        } elseif ($user->role === 'wholesaler') {
+            return redirect()->intended('/wholesaler/dashboard'); // Redirect to wholesaler dashboard
+        }
 
         return redirect()->intended(route('dashboard', absolute: false));
     }
