@@ -1,3 +1,14 @@
+/* @import 'bootstrap/dist/css/bootstrap.min.css'; */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.login-background {
+    background-image: url('/backgroundImg/bgImg1.jpeg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
