@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 .login-background {
-    background-image: url('/backgroundImg/bgImg1.jpeg');
+    background-image: url('/backgroundImg/bgImg1.png');
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -12,3 +12,8 @@
     align-items: center;
     justify-content: center;
 }
+.dark-theme {
+    background-color: #121212; /* Example dark theme background */
+    color: #ffffff; /* Example dark theme text color */
+}
+

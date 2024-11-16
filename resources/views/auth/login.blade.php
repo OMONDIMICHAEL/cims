@@ -3,25 +3,28 @@
 <!-- x-guest-layout> -->
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
-<div class="login-background">
-    <form class="bg-light p-6" method="POST" action="{{ route('login') }}">
+<div class="login-background " style="background-image: url('/backgroundImg/bgImg1.png');">
+    <form class="bg-light p-5" method="POST" action="{{ route('login') }}">
         @csrf
 
         <!-- Email Address -->
         <div class="form-outline mb-4" data-mdb-input-init>
             <input type="email" name="email" :value="old('email')" required autofocus autocomplete="username" id="txtEmail" class="form-control" />
             <label class="form-label" for="txtEmail">Email address</label>
-            <span :messages="$errors->get('email')" class="mt-2" ></span>
+            @if ($errors->has('email'))
+                <span class="text-danger mt-2">{{ $errors->first('email') }}</span>
+            @endif
         </div>
         <!-- Password -->
         <div class="form-outline mb-4" data-mdb-input-init>
             <input type="password" id="password" class="form-control block mt-1 w-full" name="password"
             required autocomplete="current-password" />
             <label class="form-label" for="password">Password</label>
+            @if ($errors->has('password'))
+                <span class="text-danger mt-2">{{ $errors->first('password') }}</span>
+            @endif
         </div>
-        <span :messages="$errors->get('password')" class="mt-2" ></span>
-
-                <!-- 2 column grid layout for inline styling -->
+        <!-- 2 column grid layout for inline styling -->
         <div class="row mt-2">
             <div class="col d-flex justify-content-center">
             <!-- Checkbox -->
